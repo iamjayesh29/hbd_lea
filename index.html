@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Léa</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ================= HOME MENU (Shows after Aug 4) ================= -->
+<div class="stage" id="menu">
+  <div class="particles" id="p-menu"></div>
+  <div class="card layer-front">
+    <div class="anni-emoji">❤️</div>
+    <h2 class="heading">Welcome Back, Baby!</h2>
+    <p class="sub">What do you want to see today?</p>
+    <button class="unlock" id="menuAnniBtn" style="margin-bottom: 12px;">5-Month Anniversary 💌</button>
+    <button class="unlock" id="menuBdayBtn">18th Birthday Surprise 🎂</button>
+  </div>
+</div>
+
+<!-- ================= ANNIVERSARY COUNTDOWN ================= -->
+<div class="stage active" id="anni-countdown">
+  <div class="particles" id="p-anni-count"></div>
+  <div class="layer-front">
+    <div class="eyebrow">UNTIL OUR 5 MONTH ANNIVERSARY</div>
+    <h1 class="heading">5 Months ❤️</h1>
+    <div class="flip-row">
+      <div class="flip"><div class="num numeral" id="ac-d">00</div><div class="lbl">DAYS</div></div>
+      <div class="flip"><div class="num numeral" id="ac-h">00</div><div class="lbl">HOURS</div></div>
+      <div class="flip"><div class="num numeral" id="ac-m">00</div><div class="lbl">MIN</div></div>
+      <div class="flip"><div class="num numeral" id="ac-s">00</div><div class="lbl">SEC</div></div>
+    </div>
+    <div id="anniHint">Come back on August 3.</div>
+  </div>
+</div>
+
+<!-- ================= ANNIVERSARY PAGE ================= -->
+<div class="stage" id="anniversary">
+  <div class="particles" id="p-anni"></div>
+  
+  <!-- Fun floating emojis background -->
+  <div class="floating-emojis">
+    <span>❤️</span><span>😭</span><span>🙄</span><span>❤️</span><span>✨</span><span>🥺</span><span>❤️</span><span>🥂</span><span>❤️</span>
+  </div>
+
+  <div class="anni-scroll-wrap">
+    <div class="anni-emoji">❤️</div>
+    <h2 class="anni-title">Happiest 5 Months, Honeyyyyy!!!!</h2>
+    
+    <div class="anni-letter">
+      <p>I hate youuuu! Why tf are you so far from meeeeeeeee!!!! 😭 But whatever 🙄</p>
+      <p>Well, this year 2026, since we met has been the best year of my life, and I dont have many words to tell you how much i love youu (and hate you!).</p>
+      <p>Anywaysssss, i dont wanna make this long, i will always be yourss honeyy, and i wish that one day we will be celebrating together, my wifeyyyy!!</p>
+      <p>I know you'll find this cringe, but whatever, <span class="highlight">MY POOKIE WIFEYY BBG!!</span> 😶‍🌫️</p>
+    </div>
+    
+    <!-- Scratch-to-Reveal Card -->
+    <div class="scratch-wrapper">
+      <p class="scratch-hint">Scratch the card for a surprise! ✨</p>
+      <div class="scratch-container" id="scratchContainer">
+        <!-- Replace src with your hidden gift photo later -->
+        <img src="photos/surprise.jpg" alt="Surprise" class="scratch-img">
+        <canvas id="scratchCanvas"></canvas>
+      </div>
+    </div>
+
+    <p class="scratch-hint">My fav picc!! 🤭 </p>
+
+    <!-- Small, sleek button below the letter -->
+    <button class="floating-next-btn" id="goToBirthdayBtn">
+      For Adults(18+) <span>→</span>
+    </button>
+  </div>
+</div>
+
+<!-- ================= BIRTHDAY COUNTDOWN ================= -->
+<div class="stage" id="countdown">
+  <div class="particles" id="p-count"></div>
+  <div class="layer-front">
+    <div class="eyebrow">Why are you here?<br>
+    You are not an unc yettt! 
+    </div>
+    <h1 class="heading">Léa-FAR(arrrr)RAHHHH!! </h1>
+    <div class="flip-row">
+      <div class="flip"><div class="num numeral" id="cd-d">00</div><div class="lbl">DAYS</div></div>
+      <div class="flip"><div class="num numeral" id="cd-h">00</div><div class="lbl">HOURS</div></div>
+      <div class="flip"><div class="num numeral" id="cd-m">00</div><div class="lbl">MIN</div></div>
+      <div class="flip"><div class="num numeral" id="cd-s">00</div><div class="lbl">SEC</div></div>
+    </div>
+    <div id="gateHint">Sorry,my bad honeyyy for the name,i was just kiddinggggg!!<BR>
+        Dont take that seriously babe, i dont mean it <br>
+        I LOVE YOUUUUUU!!!
+    </div>
+  </div>
+</div>
+
+<!-- ================= GATE (LOCKSCREEN) ================= -->
+<div class="stage" id="gate">
+  <div class="particles" id="p-gate"></div>
+  <div class="card layer-front">
+    <h2 class="heading">Welcome BABEEEEEE!!!!!</h2>
+    <p class="sub" id="gateSub">You know what you have to enter 🤭</p>
+    <input type="password" id="pwInput" maxlength="8" placeholder="········" autocomplete="off">
+    <button class="unlock" id="unlockBtn">Unlock →</button>
+    <div id="gateMsg"></div>
+  </div>
+</div>
+
+<!-- ================= OPENING ================= -->
+<div class="stage" id="opening">
+  <div class="particles" id="p-open"></div>
+  <div class="line" id="ln1">For someone who changed my life...</div>
+  <div class="line2" id="ln2">Happist Eighteenth Birthday, Léa.</div>
+</div>
+
+<!-- ================= UNLOCKED CONTENT ================= -->
+<div class="stage" id="unlocked">
+    <div class="floating-emojis">
+    <span>❤️</span><span>😭</span><span>🙄</span><span>❤️</span><span>✨</span><span>🥺</span><span>❤️</span><span>🥂</span><span>❤️</span>
+  </div>
+  <div class="scroll-container">
+    
+    <!-- Section 1: Love Declaration -->
+    <section class="content-section love-section">
+      <h2 class="big-love">I Love You So Much</h2>
+      <p class="sub-text">More than words could ever express.<br> You are my world, Léa.<br> 
+        Warning: This contains excessive amounts of love and cringe unc type thingssss!  
+    </p>
+      <div class="scroll-hint">Scroll down ↓</div>
+    </section>
+
+    <!-- Section 2: The Letter -->
+    <section class="content-section letter-section">
+      <div class="paper">
+        <div class="to">My Dearest and Prettiest Léa,</div>
+        <div class="body">
+Happist 18th birthday.
+
+*cough cough* Eighteen?? UNC?? 🫢
+
+I wanted to write down alott of thingss in one place, all the things that I don't always find the right moment to say out loud to youu but anywayssss!! 
+
+Well,i dont have much to say butt... <br> Thank you for the version of you that shows up, fully, even on the hard days,when you are feeling down. Thank you for laughing at things only we find funny,all the things(also the way you laugh,when you mock me🤭).Anywayssssss!Thank you for being patient and always so understandable and gentle with yourself tooo, even when you forget to be.<br>I am proud of youuu! 
+
+Eighteen is a big one UNCCCCC or should i say AUNT 😝. Welll,whatever this year brings to you,i hope it brings you closer to what you want in life, I ma alwayss with youuu and and I hope (selfishly) that I get a frontrow seat to it to be with youuuu!!! 
+
+If i was with you in real life right noww,i would do alot of things for yoouuuu,but.I really want to gift you something that you can keep forever,but anywaysss,I cant wait for the day when we are together honeyyy!!! 
+
+Enjoy your day honeyy!
+I LOVE YOUU 3000! 
+~Jaya(ASH)
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Book Gallery -->
+    <section class="content-section gallery-section">
+      <h2 class="gallery-title">Beautiful Moments</h2>
+      <p class="book-hint">Click the pages or arrows to turn ›</p>
+      
+      <div class="book" id="photoBook">
+        <!-- Pages are injected by JavaScript -->
+      </div>
+      
+      <div class="book-nav">
+        <button id="prevPageBtn">‹</button>
+        <button id="nextPageBtn">›</button>
+      </div>
+    </section>
+
+    <!-- Section 4: Cake & Final Message -->
+    <section class="content-section cake-section">
+      <div class="cake-emoji">🎂</div>
+      <h2 class="final-wish">HAPPIEST 18TH BIRTHDAY MY LOVE!</h2>
+    </section>
+    <h2 class="gallery-title">I wish i was there with you IRL!!!</h2>
+
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
