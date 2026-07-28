@@ -31,8 +31,8 @@ function initApp() {
   const year = now.getFullYear();
   
   // Month 7 = August (0-indexed months)
-  window.ANNIVERSARY = new Date(year, 7, 3, 0, 0, 0); 
-  window.BIRTHDAY = new Date(year, 7, 4, 0, 0, 0);    
+  window.ANNIVERSARY = new Date(year, 6, 3, 0, 0, 0); 
+  window.BIRTHDAY = new Date(year, 6, 4, 0, 0, 0);    
   
   const aug3 = new Date(year, 7, 3);
   const aug4 = new Date(year, 7, 4);
