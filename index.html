@@ -13,26 +13,145 @@
   <div class="particles" id="p-menu"></div>
   <div class="card layer-front">
     <div class="anni-emoji">❤️</div>
-    <h2 class="heading">Welcome Back, Baby!</h2>
+    <h2 class="heading">Welcome Back, Babe!</h2>
     <p class="sub">What do you want to see today?</p>
-    <button class="unlock" id="menuAnniBtn" style="margin-bottom: 12px;">5-Month Anniversary 💌</button>
-    <button class="unlock" id="menuBdayBtn">18th Birthday Surprise 🎂</button>
+    <button class="unlock" id="menuGfBtn" style="margin-bottom: 12px;">Girlfriend's Day</button>
+    <button class="unlock" id="menuAnniBtn" style="margin-bottom: 12px;">5 Month Anniversary</button>
+    <button class="unlock" id="menuBdayBtn">18th Birthday Surprise</button>
+  </div>
+</div>
+
+<!-- ================= GF DAY COUNTDOWN ================= -->
+<div class="stage active" id="gf-countdown">
+  <div class="particles" id="p-gf-count"></div>
+  <div class="layer-front">
+    <div class="eyebrow">Heyyy Honeyy! </div>
+    <h1 class="heading">WHATTTT IS THISSS???</h1>
+    <div class="flip-row">
+      <div class="flip"><div class="num numeral" id="gfc-d">00</div><div class="lbl">DAYS</div></div>
+      <div class="flip"><div class="num numeral" id="gfc-h">00</div><div class="lbl">HOURS</div></div>
+      <div class="flip"><div class="num numeral" id="gfc-m">00</div><div class="lbl">MIN</div></div>
+      <div class="flip"><div class="num numeral" id="gfc-s">00</div><div class="lbl">SEC</div></div>
+    </div>
+    <div id="gfHint">Nuhhhh uh uhhh!!!!</div>
+  </div>
+</div>
+
+<!-- ================= GIRLFRIEND'S DAY PAGE ================= -->
+<div class="stage" id="girlfriend-day">
+  <div class="particles" id="p-gf"></div>
+  
+  <div class="floating-emojis">
+    <span>👑</span><span>💖</span><span>🌹</span><span>✨</span><span>👑</span><span>💖</span><span>🌹</span><span>✨</span><span>👑</span>
+  </div>
+
+  <div class="anni-scroll-wrap">
+    <div class="anni-emoji">👑</div>
+    <h2 class="anni-title">Happiest Girlfriend's Day Love!</h2>
+    
+
+    <!-- Memory Pinboard -->
+    <div class="pinboard-wrap">
+      <h3 class="pinboard-title">Our Little Memories</h3>
+      <div class="pinboard">
+        <div class="pin-note" style="top: 5%; left: 10%; transform: rotate(-5deg);">Movie Dates!</div>
+        <div class="pin-note" style="top: 8%; left: 55%; transform: rotate(4deg);">Long calls</div>
+        <div class="pin-note" style="top: 40%; left: 20%; transform: rotate(-3deg);">Shared laughter</div>
+        <div class="pin-note" style="top: 45%; left: 60%; transform: rotate(7deg);">Future wifey</div>
+        <div class="pin-note" style="top: 25%; left: 38%; transform: rotate(-8deg);">Pookie Kookie</div>
+      </div>
+    </div>
+    
+    <!-- Timeline -->
+    <div class="timeline-wrap">
+      <h3 class="timeline-title">Our Journey So Far 💌</h3>
+      <div class="timeline">
+        
+        <!-- Item 1 (Left) -->
+        <div class="timeline-item">
+          <div class="timeline-dot">💕</div>
+          <div class="timeline-content">
+            
+            <div class="timeline-date">28/12/2025</div>
+            <div class="timeline-event">Where it all begin...</div>
+            <div class="timeline-desc">The day we first added each other on Snapp! </div>
+          </div>
+        </div>
+        
+        <!-- Item 2 (Right) -->
+        <div class="timeline-item">
+          <div class="timeline-dot">💬</div>
+          <div class="timeline-content">
+            
+            <div class="timeline-date">26/01/2026</div>
+            <div class="timeline-event">Our face reveal conversation</div>
+            <div class="timeline-desc">That's when I knew you were soo pretttyyyy!!! </div>
+          </div>
+        </div>
+        
+        <!-- Item 3 (Left) -->
+        <div class="timeline-item">
+          <div class="timeline-dot">😍</div>
+          <div class="timeline-content">
+            
+            <div class="timeline-date">07/02/2026</div>
+            <div class="timeline-event">First "I LOVE YOU"</div>
+            <div class="timeline-desc">Not that I'd admit it then...</div>
+          </div>
+        </div>
+        
+        <!-- Item 4 (Right) -->
+        <div class="timeline-item">
+          <div class="timeline-dot">💍</div>
+          <div class="timeline-content">           
+            <div class="timeline-date">03/03/2026</div>
+            <div class="timeline-event">The day we became "us"</div>
+            <div class="timeline-desc">Best decision we ever made</div>
+          </div>
+        </div>
+        
+        <!-- Item 5 (Left) -->
+        <div class="timeline-item">
+          <div class="timeline-dot">👑</div>
+          <div class="timeline-content">
+            <div class="timeline-date">Today</div>
+            <div class="timeline-event">Girlfriend's Day</div>
+            <div class="timeline-desc">Celebrating you, my queen</div>
+          </div>
+        </div>
+        
+        <!-- Item 6 (Right) -->
+        <div class="timeline-item">
+          <div class="timeline-dot">🌹</div>
+          <div class="timeline-content">
+            <div class="timeline-date">FOREVER</div>
+            <div class="timeline-event">BEST GIRLFREIND EVER</div>
+            <div class="timeline-desc">I'm really the luckiest guy to have you has a girlfriendd!! </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    
+    <button class="floating-next-btn" id="goToAnniBtn">
+      Nothing <span>→</span>
+    </button>
   </div>
 </div>
 
 <!-- ================= ANNIVERSARY COUNTDOWN ================= -->
-<div class="stage active" id="anni-countdown">
+<div class="stage" id="anni-countdown">
   <div class="particles" id="p-anni-count"></div>
   <div class="layer-front">
-    <div class="eyebrow">HEYYY BABEEE!! </div>
-    <h1 class="heading">5 Months ❤️</h1>
+    <div class="eyebrow">ANOTHERRR COUNTDOWN?</div>
+    <h1 class="heading">5 Months Honeyyyyyyy</h1>
     <div class="flip-row">
       <div class="flip"><div class="num numeral" id="ac-d">00</div><div class="lbl">DAYS</div></div>
       <div class="flip"><div class="num numeral" id="ac-h">00</div><div class="lbl">HOURS</div></div>
       <div class="flip"><div class="num numeral" id="ac-m">00</div><div class="lbl">MIN</div></div>
       <div class="flip"><div class="num numeral" id="ac-s">00</div><div class="lbl">SEC</div></div>
     </div>
-    <div id="anniHint">HUHH?? Why are you here?</div>
+    <div id="anniHint">I hate your punishmentssssss!!!!</div>
   </div>
 </div>
 
@@ -40,7 +159,6 @@
 <div class="stage" id="anniversary">
   <div class="particles" id="p-anni"></div>
   
-  <!-- Fun floating emojis background -->
   <div class="floating-emojis">
     <span>❤️</span><span>😭</span><span>🙄</span><span>❤️</span><span>✨</span><span>🥺</span><span>❤️</span><span>🥂</span><span>❤️</span>
   </div>
@@ -60,7 +178,6 @@
     <div class="scratch-wrapper">
       <p class="scratch-hint">Scratch the card for a surprise! ✨</p>
       <div class="scratch-container" id="scratchContainer">
-        <!-- Replace src with your hidden gift photo later -->
         <img src="photos/surprise.jpg" alt="Surprise" class="scratch-img">
         <canvas id="scratchCanvas"></canvas>
       </div>
@@ -68,7 +185,6 @@
 
     <p class="scratch-hint">My fav picc!! 🤭 </p>
 
-    <!-- Small, sleek button below the letter -->
     <button class="floating-next-btn" id="goToBirthdayBtn">
       For Adults(18+) <span>→</span>
     </button>
@@ -155,6 +271,8 @@ I LOVE YOUU 3000!
       </div>
     </section>
 
+  
+
     <!-- Section 3: Book Gallery -->
     <section class="content-section gallery-section">
       <h2 class="gallery-title">Beautiful Moments</h2>
@@ -174,8 +292,8 @@ I LOVE YOUU 3000!
     <section class="content-section cake-section">
       <div class="cake-emoji">🎂</div>
       <h2 class="final-wish">HAPPIEST 18TH BIRTHDAY MY LOVE!</h2>
+      <h2 class="gallery-title" style="margin-top: 30px;">I wish i was there with you IRL!!!</h2>
     </section>
-    <h2 class="gallery-title">I wish i was there with you IRL!!!</h2>
 
   </div>
 </div>
