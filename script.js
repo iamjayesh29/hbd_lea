@@ -31,9 +31,11 @@ function initApp() {
   const year = now.getFullYear();
   
   // Month 7 = August (0-indexed months)
-  window.ANNIVERSARY = new Date(year, 7, 3, 3, 30, 0); 
-  window.BIRTHDAY = new Date(year, 7, 4, 3, 30, 0);    
+  window.GF_DAY = new Date(year, 6, 1, 0, 0, 0);     // Aug 1
+  window.ANNIVERSARY = new Date(year, 6, 3, 0, 0, 0); // Aug 3
+  window.BIRTHDAY = new Date(year, 6, 4, 0, 0, 0);    // Aug 4
   
+  const aug1 = new Date(year, 7, 1);
   const aug3 = new Date(year, 7, 3);
   const aug4 = new Date(year, 7, 4);
   
@@ -44,13 +46,20 @@ function initApp() {
     goTo('anniversary');
     initAnniversaryButton();
     initScratchCard();
+  } else if (now >= aug1 && now < aug3) {
+    goTo('girlfriend-day');
+    initGfButton();
   } else {
-    goTo('anni-countdown');
-    startAnniCountdown();
+    goTo('gf-countdown');
+    startGfCountdown();
   }
 }
 
 function initMenuButtons() {
+  document.getElementById('menuGfBtn').addEventListener('click', () => {
+    goTo('girlfriend-day');
+    initGfButton();
+  });
   document.getElementById('menuAnniBtn').addEventListener('click', () => {
     goTo('anniversary');
     initAnniversaryButton();
@@ -62,6 +71,15 @@ function initMenuButtons() {
   });
 }
 
+function initGfButton() {
+  const btn = document.getElementById('goToAnniBtn');
+  if(!btn) return;
+  btn.onclick = () => {
+    goTo('anni-countdown');
+    startAnniCountdown();
+  };
+}
+
 function initAnniversaryButton() {
   const btn = document.getElementById('goToBirthdayBtn');
   if(!btn) return;
@@ -69,6 +87,45 @@ function initAnniversaryButton() {
     goTo('countdown');
     startBirthdayCountdown();
   };
+}
+
+// ---------- GF DAY COUNTDOWN ----------
+function tickGfCountdown(){
+  const days = document.getElementById('gfc-d');
+  const hours = document.getElementById('gfc-h');
+  const minutes = document.getElementById('gfc-m');
+  const seconds = document.getElementById('gfc-s');
+  if(!days || !hours || !minutes || !seconds) return;
+
+  const now = new Date();
+  let diff = window.GF_DAY - now;
+  if(diff <= 0){
+    days.textContent='00'; hours.textContent='00';
+    minutes.textContent='00'; seconds.textContent='00';
+    
+    const gfCountdown = document.getElementById('gf-countdown');
+    if(gfCountdown && gfCountdown.classList.contains('active')){
+      setTimeout(()=>{
+        goTo('girlfriend-day');
+        initGfButton();
+      }, 1400);
+    }
+    return;
+  }
+  const d = Math.floor(diff/86400000); diff -= d*86400000;
+  const h = Math.floor(diff/3600000); diff -= h*3600000;
+  const m = Math.floor(diff/60000); diff -= m*60000;
+  const s = Math.floor(diff/1000);
+  days.textContent = String(d).padStart(2,'0');
+  hours.textContent = String(h).padStart(2,'0');
+  minutes.textContent = String(m).padStart(2,'0');
+  seconds.textContent = String(s).padStart(2,'0');
+}
+
+function startGfCountdown() {
+  if(!document.getElementById('gf-countdown')) return;
+  tickGfCountdown();
+  setInterval(tickGfCountdown, 1000);
 }
 
 // ---------- ANNIVERSARY COUNTDOWN ----------
@@ -85,8 +142,8 @@ function tickAnniCountdown(){
     days.textContent='00'; hours.textContent='00';
     minutes.textContent='00'; seconds.textContent='00';
     
-    const anniCountdown = document.getElementById('anni-countdown');
-    if(anniCountdown && anniCountdown.classList.contains('active')){
+    const aniCountdown = document.getElementById('anni-countdown');
+    if(aniCountdown && aniCountdown.classList.contains('active')){
       setTimeout(()=>{
         goTo('anniversary');
         initAnniversaryButton();
@@ -253,7 +310,7 @@ function initScratchCard() {
 
   function checkReveal() {
     if (revealed) return;
-    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const imageData = ctx.getImageData(0,0,canvas.width,canvas.height);
     let transparentPixels = 0;
     const totalPixels = canvas.width * canvas.height;
     
@@ -320,7 +377,6 @@ function initReasons() {
     if (idx < reasons.length) {
       bubble.classList.remove('show');
       
-      // Timeout to allow the bubble to pop out and in smoothly
       setTimeout(() => {
         bubble.textContent = reasons[idx];
         idx++;
@@ -428,6 +484,8 @@ function updateBookZIndexes(pages) {
 // ---------- START ----------
 function initPage(){
   spawnParticles('p-menu', 16);
+  spawnParticles('p-gf-count', 24);
+  spawnParticles('p-gf', 16);
   spawnParticles('p-anni-count', 24);
   spawnParticles('p-anni', 16);
   spawnParticles('p-count', 24);
