@@ -1,5 +1,29 @@
 // CONFIG
-window.PASSWORD = "04082008"; // Set her password here
+window.PASSWORD = "04082008"; 
+const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1532775806290624693/bscV6VQBBpUmVKmzyWEQYJxzkjejiCe1WGYTlfTmIylrtcHA1xRE7KeNMo3CP_dkOLK-"; // <-- PASTE IT HERE
+
+// ---------- DISCORD NOTIFICATION ----------
+function notifyVisit() {
+  // Check if we already notified in this session so it doesn't spam if she refreshes
+  if (sessionStorage.getItem('notified')) return;
+  
+  // Mark as notified for this session
+  sessionStorage.setItem('notified', 'true');
+
+  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+  const device = isMobile ? "📱 Mobile" : "💻 Desktop";
+
+  const payload = {
+    content: `🔔 **ALERT!** Someone just opened the website!\nDevice: ${device}\nTime: ${new Date().toLocaleString()}`
+  };
+
+  // Send the data to Discord
+  fetch(DISCORD_WEBHOOK_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).catch(err => console.error("Discord webhook error:", err));
+}
 
 // ---------- CORE FUNCTIONS ----------
 function spawnParticles(containerId, count){
@@ -655,6 +679,7 @@ function updateBookZIndexes(pages) {
 
 // ---------- START ----------
 function initPage(){
+  notifyVisit();
   spawnParticles('p-menu', 16);
   spawnParticles('p-gf-count', 24);
   spawnParticles('p-gf', 16);
