@@ -438,11 +438,11 @@ function initLoveSlider() {
   slider.oninput = () => {
     const v = slider.value;
     if(v == 0) reveal.textContent = "Slide me!";
-    else if(v < 25) reveal.textContent = "A little bit? 🤏";
-    else if(v < 50) reveal.textContent = "Halfway there! 😳";
-    else if(v < 75) reveal.textContent = "You're getting warmer... 🔥";
-    else if(v < 100) reveal.textContent = "Almost maximum love... 😭";
-    else reveal.textContent = "ERROR 404: Love exceeded capacity. I love you infinitely. 🤍";
+    else if(v < 25) reveal.textContent = "Ewww,not so little 🤏";
+    else if(v < 50) reveal.textContent = "You dont love me?? 🙄";
+    else if(v < 75) reveal.textContent = "I hate youuuuu 🙄 ";
+    else if(v < 100) reveal.textContent = "OMGGG,you do really love meeee 😭";
+    else reveal.textContent = "I love you 3000!!!!!!!";
   };
 }
 
