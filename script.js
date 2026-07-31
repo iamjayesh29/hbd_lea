@@ -30,10 +30,9 @@ function initApp() {
   const now = new Date();
   const year = now.getFullYear();
   
-  // Month 7 = August (0-indexed months)
-  window.GF_DAY = new Date(year, 7, 1, 0, 0, 0);     // Aug 1
-  window.ANNIVERSARY = new Date(year, 7, 3, 0, 0, 0); // Aug 3
-  window.BIRTHDAY = new Date(year, 7, 4, 0, 0, 0);    // Aug 4
+  window.GF_DAY = new Date(year, 7, 1, 0, 0, 0);     
+  window.ANNIVERSARY = new Date(year, 7, 3, 0, 0, 0); 
+  window.BIRTHDAY = new Date(year, 7, 4, 0, 0, 0);    
   
   const aug1 = new Date(year, 7, 1);
   const aug3 = new Date(year, 7, 3);
@@ -46,9 +45,11 @@ function initApp() {
     goTo('anniversary');
     initAnniversaryButton();
     initScratchCard();
+    initAnniversaryExtras();
   } else if (now >= aug1 && now < aug3) {
     goTo('girlfriend-day');
     initGfButton();
+    initMultiScratch();
   } else {
     goTo('gf-countdown');
     startGfCountdown();
@@ -59,11 +60,13 @@ function initMenuButtons() {
   document.getElementById('menuGfBtn').addEventListener('click', () => {
     goTo('girlfriend-day');
     initGfButton();
+    initMultiScratch();
   });
   document.getElementById('menuAnniBtn').addEventListener('click', () => {
     goTo('anniversary');
     initAnniversaryButton();
     initScratchCard();
+    initAnniversaryExtras();
   });
   document.getElementById('menuBdayBtn').addEventListener('click', () => {
     goTo('countdown');
@@ -108,6 +111,7 @@ function tickGfCountdown(){
       setTimeout(()=>{
         goTo('girlfriend-day');
         initGfButton();
+        initMultiScratch();
       }, 1400);
     }
     return;
@@ -148,6 +152,7 @@ function tickAnniCountdown(){
         goTo('anniversary');
         initAnniversaryButton();
         initScratchCard();
+        initAnniversaryExtras();
       }, 1400);
     }
     return;
@@ -253,10 +258,231 @@ function startOpeningSequence(){
   setTimeout(()=> goTo('unlocked'), 8100);
 }
 
-// ---------- SCRATCH CARD ----------
+// ---------- MULTI SCRATCH CARDS (GF Day) ----------
+function initMultiScratch() {
+  const canvases = document.querySelectorAll('.multi-scratch .scratch-canvas');
+  canvases.forEach(canvas => {
+    if(canvas.dataset.init === 'true') return;
+    canvas.dataset.init = 'true';
+    
+    const ctx = canvas.getContext('2d');
+    const container = canvas.parentElement;
+    canvas.width = container.offsetWidth;
+    canvas.height = container.offsetHeight;
+
+    const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+    grad.addColorStop(0, '#FF5EA8');
+    grad.addColorStop(0.5, '#B47CFF');
+    grad.addColorStop(1, '#FFB454');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.font = "bold 20px 'Caveat', cursive";
+    ctx.fillStyle = "#ffffff";
+    ctx.textAlign = "center";
+    ctx.fillText("Scratch!", canvas.width / 2, canvas.height / 2);
+
+    let isDrawing = false;
+    let revealed = false;
+
+    function getPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      const x = (e.clientX || e.touches[0].clientX) - rect.left;
+      const y = (e.clientY || e.touches[0].clientY) - rect.top;
+      return { x, y };
+    }
+    function startDraw(e) { e.preventDefault(); isDrawing = true; ctx.globalCompositeOperation = 'destination-out'; draw(e); }
+    function draw(e) {
+      if (!isDrawing || revealed) return;
+      e.preventDefault();
+      const pos = getPos(e);
+      ctx.beginPath();
+      ctx.arc(pos.x, pos.y, 15, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    function stopDraw() { if (!isDrawing) return; isDrawing = false; checkReveal(); }
+    function checkReveal() {
+      if (revealed) return;
+      const imageData = ctx.getImageData(0,0,canvas.width,canvas.height);
+      let t = 0;
+      for (let i = 3; i < imageData.data.length; i += 16) { if (imageData.data[i] === 0) t += 4; }
+      if ((t / (canvas.width * canvas.height)) * 100 > 40) {
+        revealed = true;
+        canvas.style.opacity = '0';
+        setTimeout(() => { canvas.style.pointerEvents = 'none'; }, 600);
+      }
+    }
+
+    canvas.addEventListener('mousedown', startDraw);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', stopDraw);
+    canvas.addEventListener('mouseleave', stopDraw);
+    canvas.addEventListener('touchstart', startDraw);
+    canvas.addEventListener('touchmove', draw);
+    canvas.addEventListener('touchend', stopDraw);
+  });
+}
+
+// ---------- ANNIVERSARY EXTRAS ----------
+function initAnniversaryExtras() {
+  initEnvelopes();
+  initLoveSlider();
+  initConnectHearts();
+}
+
+function updateClocks() {
+  const india = document.getElementById('indiaTime');
+  const france = document.getElementById('franceTime');
+  if(!india || !france) return;
+  const now = new Date();
+  try {
+    india.textContent = now.toLocaleTimeString('en-US', { timeZone: 'Asia/Kolkata', hour12: false });
+    france.textContent = now.toLocaleTimeString('en-US', { timeZone: 'Europe/Paris', hour12: false });
+  } catch(e) {
+    india.textContent = "00:00:00";
+    france.textContent = "00:00:00";
+  }
+}
+
+function updateCounter() {
+  const start = new Date('2026-03-03T00:00:00');
+  const now = new Date();
+  let diff = now - start;
+  if(diff < 0) diff = 0;
+  
+  const d = Math.floor(diff / 86400000); diff -= d * 86400000;
+  const h = Math.floor(diff / 3600000); diff -= h * 3600000;
+  const m = Math.floor(diff / 60000); diff -= m * 60000;
+  const s = Math.floor(diff / 1000);
+  
+  const dEl = document.getElementById('c-days');
+  if(dEl) {
+    document.getElementById('c-days').textContent = d;
+    document.getElementById('c-hours').textContent = String(h).padStart(2,'0');
+    document.getElementById('c-mins').textContent = String(m).padStart(2,'0');
+    document.getElementById('c-secs').textContent = String(s).padStart(2,'0');
+  }
+}
+
+function initEnvelopes() {
+  document.querySelectorAll('.envelope').forEach(env => {
+    env.onclick = () => {
+      document.querySelectorAll('.envelope').forEach(e => e.classList.remove('opened'));
+      env.classList.add('opened');
+      document.getElementById('envMessage').textContent = env.getAttribute('data-msg');
+    };
+  });
+}
+
+function initLoveSlider() {
+  const slider = document.getElementById('loveSlider');
+  const reveal = document.getElementById('loveReveal');
+  if(!slider || !reveal) return;
+  slider.oninput = () => {
+    const v = slider.value;
+    if(v == 0) reveal.textContent = "Slide me!";
+    else if(v < 25) reveal.textContent = "A little bit? 🤏";
+    else if(v < 50) reveal.textContent = "Halfway there! 😳";
+    else if(v < 75) reveal.textContent = "You're getting warmer... 🔥";
+    else if(v < 100) reveal.textContent = "Almost maximum love... 😭";
+    else reveal.textContent = "ERROR 404: Love exceeded capacity. I love you infinitely. 🤍";
+  };
+}
+
+function initConnectHearts() {
+  const drag = document.getElementById('dragHeart');
+  const target = document.getElementById('targetHeart');
+  const wrap = document.getElementById('connectWrap');
+  if(!drag || !target || !wrap || drag.dataset.init === 'true') return;
+  drag.dataset.init = 'true';
+
+  let isDragging = false;
+  let startX, startY;
+
+  function start(e) {
+    isDragging = true;
+    drag.style.cursor = 'grabbing';
+    const rect = drag.getBoundingClientRect();
+    const point = e.touches ? e.touches[0] : e;
+    startX = point.clientX - rect.left;
+    startY = point.clientY - rect.top;
+    e.preventDefault();
+  }
+  function move(e) {
+    if(!isDragging) return;
+    const point = e.touches ? e.touches[0] : e;
+    const wrapRect = wrap.getBoundingClientRect();
+    let x = point.clientX - wrapRect.left - startX;
+    let y = point.clientY - wrapRect.top - startY;
+    
+    x = Math.max(0, Math.min(x, wrapRect.width - drag.offsetWidth));
+    y = Math.max(0, Math.min(y, wrapRect.height - drag.offsetHeight));
+    
+    drag.style.position = 'absolute';
+    drag.style.left = x + 'px';
+    drag.style.top = y + 'px';
+    
+    const dragRect = drag.getBoundingClientRect();
+    const targetRect = target.getBoundingClientRect();
+    const dist = Math.hypot(
+      (dragRect.left + dragRect.width/2) - (targetRect.left + targetRect.width/2),
+      (dragRect.top + dragRect.height/2) - (targetRect.top + targetRect.height/2)
+    );
+    
+    if(dist < 50) {
+      isDragging = false;
+      drag.style.opacity = '0';
+      target.innerHTML = '❤️';
+      target.style.transform = 'scale(1.5)';
+      target.style.background = 'var(--grad)';
+      burstHearts(wrap);
+    }
+    e.preventDefault();
+  }
+  function end() { isDragging = false; drag.style.cursor = 'grab'; }
+
+  drag.addEventListener('mousedown', start);
+  document.addEventListener('mousemove', move);
+  document.addEventListener('mouseup', end);
+  drag.addEventListener('touchstart', start);
+  document.addEventListener('touchmove', move, {passive: false});
+  document.addEventListener('touchend', end);
+  
+  function burstHearts(container) {
+    for(let i=0; i<20; i++) {
+      const h = document.createElement('div');
+      h.textContent = '❤️';
+      h.style.position = 'absolute';
+      h.style.left = '50%';
+      h.style.top = '50%';
+      h.style.fontSize = '24px';
+      h.style.pointerEvents = 'none';
+      h.style.zIndex = '10';
+      container.appendChild(h);
+      
+      const angle = Math.random() * Math.PI * 2;
+      const dist = Math.random() * 120 + 50;
+      const tx = Math.cos(angle) * dist;
+      const ty = Math.sin(angle) * dist;
+      
+      h.animate([
+        { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
+        { transform: `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(0)`, opacity: 0 }
+      ], {
+        duration: 1200 + Math.random() * 500,
+        easing: 'cubic-bezier(0.1, 0.8, 0.2, 1)'
+      });
+      
+      setTimeout(() => h.remove(), 1700);
+    }
+  }
+}
+
+// ---------- ORIGINAL SCRATCH CARD (Anniversary) ----------
 function initScratchCard() {
   const canvas = document.getElementById('scratchCanvas');
-  if (!canvas) return;
+  if (!canvas || canvas.dataset.init === 'true') return;
+  canvas.dataset.init = 'true';
   
   const ctx = canvas.getContext('2d');
   const container = document.getElementById('scratchContainer');
@@ -336,60 +562,6 @@ function initScratchCard() {
   canvas.addEventListener('touchstart', startDraw);
   canvas.addEventListener('touchmove', draw);
   canvas.addEventListener('touchend', stopDraw);
-}
-
-// ---------- REASONS SPAM BUTTON ----------
-const reasons = [
-  "Because you mock my laugh 🤭",
-  "Because you steal my hoodies 👕",
-  "Because you're my wifeyyy 💍",
-  "Even though you're far away 🥺",
-  "Because you're turning into an unc 👴",
-  "Because you put up with my cringe 😶‍🌫️",
-  "Because you're my pookie wifey BBG ✨",
-  "Because your laugh is contagious 😂",
-  "Because you make me smile even when I'm sad",
-  "Because you're literally perfect 😍",
-  "Because you're my favorite person to talk to",
-  "Because you're my gaming partner 🎮",
-  "Because you send me cute selfies 📸",
-  "Because you call me baby 🥰",
-  "Because you make me want to be better",
-  "Because you're my future 🌟",
-  "Because you're my best friend 👯‍♀️",
-  "Because you support my dreams 💭",
-  "Because you laugh at my dumb jokes 😅",
-  "Because you're beautiful inside and out 💖",
-  "Because you're my forever and always 🔄",
-  "Because you're the Léa to my Jaya 🤍",
-  "Because you're my home 🏠",
-  "Because I just do, okay?! 😤"
-];
-
-function initReasons() {
-  const btn = document.getElementById('reasonBtn');
-  const bubble = document.getElementById('reasonBubble');
-  if(!btn || !bubble) return;
-  
-  let idx = 0;
-  
-  btn.addEventListener('click', () => {
-    if (idx < reasons.length) {
-      bubble.classList.remove('show');
-      
-      setTimeout(() => {
-        bubble.textContent = reasons[idx];
-        idx++;
-        bubble.classList.add('show');
-        
-        if (idx === reasons.length) {
-          btn.textContent = "That's all of them! 🥰";
-          btn.classList.add('done');
-          btn.disabled = true;
-        }
-      }, 150);
-    }
-  });
 }
 
 // ---------- BOOK GALLERY ----------
@@ -494,8 +666,13 @@ function initPage(){
   
   initApp();
   initGate();
-  initReasons();
   initBook();
+  
+  // Start global clocks and counters
+  updateClocks();
+  setInterval(updateClocks, 1000);
+  updateCounter();
+  setInterval(updateCounter, 1000);
 }
 
 document.addEventListener('DOMContentLoaded', initPage);
