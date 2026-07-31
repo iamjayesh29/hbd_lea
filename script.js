@@ -4,11 +4,7 @@ const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/153277580629062469
 
 // ---------- DISCORD NOTIFICATION ----------
 async function notifyVisit() {
-  // Check if we already notified in this session so it doesn't spam if she refreshes
-  if (sessionStorage.getItem('notified')) return;
-  
-  // Mark as notified for this session
-  sessionStorage.setItem('notified', 'true');
+  // Removed the sessionStorage check so it notifies EVERY TIME (including refreshes)
 
   const userAgent = navigator.userAgent;
   let os = "Unknown OS";
@@ -42,7 +38,7 @@ async function notifyVisit() {
   }
 
   // Build the fancy Discord message
-  const message = `🔔 **ALERT! Someone just opened the website!**\n` +
+  const message = `🔔 **ALERT! Someone just opened or refreshed the website!**\n` +
                   `🕒 **Time:** ${time}\n` +
                   `🌍 **Location:** ${locationInfo}\n` +
                   `💻 **Device:** ${os} (${browser})\n` +
