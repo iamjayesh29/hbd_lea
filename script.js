@@ -3,18 +3,55 @@ window.PASSWORD = "04082008";
 const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1532775806290624693/bscV6VQBBpUmVKmzyWEQYJxzkjejiCe1WGYTlfTmIylrtcHA1xRE7KeNMo3CP_dkOLK-"; // <-- PASTE IT HERE
 
 // ---------- DISCORD NOTIFICATION ----------
-function notifyVisit() {
+async function notifyVisit() {
   // Check if we already notified in this session so it doesn't spam if she refreshes
   if (sessionStorage.getItem('notified')) return;
   
   // Mark as notified for this session
   sessionStorage.setItem('notified', 'true');
 
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-  const device = isMobile ? "📱 Mobile" : "💻 Desktop";
+  const userAgent = navigator.userAgent;
+  let os = "Unknown OS";
+  if (userAgent.match(/Win/i)) os = "Windows";
+  if (userAgent.match(/Mac/i)) os = "MacOS";
+  if (userAgent.match(/iPhone/i)) os = "iPhone";
+  if (userAgent.match(/Android/i)) os = "Android";
+
+  let browser = "Unknown Browser";
+  if (userAgent.match(/chrome|chromium|crios/i)) browser = "Chrome";
+  if (userAgent.match(/firefox|fxios/i)) browser = "Firefox";
+  if (userAgent.match(/safari/i) && !userAgent.match(/chrome|chromium|crios/i)) browser = "Safari";
+
+  const language = navigator.language || "Unknown";
+  const screenWidth = window.screen.width;
+  const screenHeight = window.screen.height;
+  const referrer = document.referrer || "Direct/Typed in URL";
+  const time = new Date().toLocaleString();
+
+  let locationInfo = "Location unavailable";
+  
+  // Fetch her approximate location using a free IP API
+  try {
+    const response = await fetch('https://ipapi.co/json/');
+    const data = await response.json();
+    if (data && data.city) {
+      locationInfo = `${data.city}, ${data.country_name} (${data.region})`;
+    }
+  } catch (e) {
+    console.log("Geolocation fetch failed");
+  }
+
+  // Build the fancy Discord message
+  const message = `🔔 **ALERT! Someone just opened the website!**\n` +
+                  `🕒 **Time:** ${time}\n` +
+                  `🌍 **Location:** ${locationInfo}\n` +
+                  `💻 **Device:** ${os} (${browser})\n` +
+                  `📱 **Screen:** ${screenWidth}x${screenHeight}\n` +
+                  `🗣️ **Language:** ${language}\n` +
+                  `🔗 **Came from:** ${referrer}`;
 
   const payload = {
-    content: `🔔 **ALERT!** Someone just opened the website!\nDevice: ${device}\nTime: ${new Date().toLocaleString()}`
+    content: message
   };
 
   // Send the data to Discord
