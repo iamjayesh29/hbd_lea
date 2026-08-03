@@ -87,9 +87,9 @@ function initApp() {
   const now = new Date();
   const year = now.getFullYear();
   
-  window.GF_DAY = new Date(year, 7, 1, 0, 0, 0);     
-  window.ANNIVERSARY = new Date(year, 7, 3, 0, 0, 0); 
-  window.BIRTHDAY = new Date(year, 7, 4, 0, 0, 0);    
+  window.GF_DAY = new Date(year, 6, 1, 0, 0, 0);     
+  window.ANNIVERSARY = new Date(year, 6, 3, 0, 0, 0); 
+  window.BIRTHDAY = new Date(year, 6, 4, 0, 0, 0);    
   
   const aug1 = new Date(year, 7, 1);
   const aug3 = new Date(year, 7, 3);
@@ -439,10 +439,10 @@ function initLoveSlider() {
     const v = slider.value;
     if(v == 0) reveal.textContent = "Slide me!";
     else if(v < 25) reveal.textContent = "Ewww,not so little 🤏";
-    else if(v < 50) reveal.textContent = "You dont love me?? 🙄";
-    else if(v < 75) reveal.textContent = "I hate youuuuu 🙄 ";
+    else if(v < 50) reveal.textContent = "You dont love me?? 😳";
+    else if(v < 75) reveal.textContent = "I hate youuuuu 🔥";
     else if(v < 100) reveal.textContent = "OMGGG,you do really love meeee 😭";
-    else reveal.textContent = "I love you 3000!!!!!!!";
+    else reveal.textContent = "I love you 3000!!!!!!!🤍";
   };
 }
 
@@ -621,6 +621,29 @@ function initScratchCard() {
   canvas.addEventListener('touchend', stopDraw);
 }
 
+// ---------- CASSETTE PLAYER ----------
+function initCassette() {
+  const tape = document.getElementById('cassetteTape');
+  const audio = document.getElementById('ourSong');
+  const status = document.getElementById('tapeStatus');
+  
+  if(!tape || !audio) return;
+  
+  audio.volume = 0.05; // <--- ADD THIS LINE! (0.05 is 5% volume)
+  
+  tape.addEventListener('click', () => {
+    if(audio.paused) {
+      audio.play().catch(e => console.log("Audio play blocked"));
+      tape.classList.add('playing');
+      status.textContent = "Now Playing... 🎵";
+    } else {
+      audio.pause();
+      tape.classList.remove('playing');
+      status.textContent = "Press Play 🎧";
+    }
+  });
+}
+
 // ---------- BOOK GALLERY ----------
 const galleryImages = [
   "<div class='ph'><img src='photos/photo1.jpg' alt='Photo 1'></div>",
@@ -725,6 +748,7 @@ function initPage(){
   initApp();
   initGate();
   initBook();
+  initCassette(); // Start the cassette player logic
   
   // Start global clocks and counters
   updateClocks();
