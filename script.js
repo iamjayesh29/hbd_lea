@@ -87,9 +87,9 @@ function initApp() {
   const now = new Date();
   const year = now.getFullYear();
   
-  window.GF_DAY = new Date(year, 6, 1, 0, 0, 0);     
-  window.ANNIVERSARY = new Date(year, 6, 3, 0, 0, 0); 
-  window.BIRTHDAY = new Date(year, 6, 4, 0, 0, 0);    
+  window.GF_DAY = new Date(year, 7, 1, 0, 0, 0);     
+  window.ANNIVERSARY = new Date(year, 7, 3, 0, 0, 0); 
+  window.BIRTHDAY = new Date(year, 7, 4, 0, 0, 0);    
   
   const aug1 = new Date(year, 7, 1);
   const aug3 = new Date(year, 7, 3);
