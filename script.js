@@ -650,7 +650,7 @@ const galleryImages = [
   "<div class='ph'><img src='photos/photo2.jpg' alt='Photo 2'></div>",
   "<div class='ph'><img src='photos/photo3.jpg' alt='Photo 3'></div>",
   "<div class='ph'><img src='photos/photo4.jpg' alt='Photo 4'></div>",
-  "<div class='ph'><img src='photos/photo5.jpg' alt='Photo 5'></div>",
+  "<div class='ph'><img src='photos/surprise.jpg' alt='Photo 5'></div>",
   "<div class='ph'><img src='photos/photo6.jpg' alt='Photo 6'></div>",
   "<div class='ph'><img src='photos/photo7.jpg' alt='Photo 7'></div>",
   "<div class='ph'><img src='photos/photo8.jpg' alt='Photo 8'></div>"
