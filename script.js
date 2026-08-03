@@ -95,7 +95,7 @@ function initApp() {
   const aug3 = new Date(year, 7, 3);
   const aug4 = new Date(year, 7, 4);
   
-  if (now >= aug4) {
+  if (now > aug4) {
     goTo('menu');
     initMenuButtons();
   } else if (now >= aug3 && now < aug4) {
